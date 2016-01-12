@@ -1,0 +1,51 @@
+/* Portrait and Landscape */
+@media only screen 
+  and (min-width: 320px) 
+  and (max-width: 480px)
+  {
+
+      #footermenu {
+          display: block;
+          background: #fff;
+          border-top: 1px solid #e5e5e5;
+          min-height: 50px;
+          padding: 10px 0;
+          font-size: 8pt;
+      }
+      
+      #footermenu ul {
+          width: 90%;
+          margin: auto;
+      }
+      
+      .footericons li {
+          text-align: center;
+          background: #fff;
+      }
+      
+      .footericons li > a {
+          color: #bfbfbf;
+      }
+      
+      .footericons li > a:hover {
+          color: #919191;
+          background: #fff;
+      }
+      
+      .footericons > li.active > a, .footericons > li.active > a:focus {
+          color: #c40009;
+          background: #fff;
+      }
+      
+      .footericons > li.active > a:hover {
+          color: #E0000A;
+          background: #fff;
+      }
+}
+
+@media only screen
+    and (min-width: 481px) {
+        #footermenu {
+            display: none;
+        }
+}
