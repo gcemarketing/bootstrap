@@ -70,15 +70,15 @@ $mandrillHTML = '<p>Dear *|HTML:NAME|*</p>
 				 <p>Your number of submitted is *|HTML:SUBMITTED|*</p>';
 
 try {
-    $mandrill = new Mandrill('pD7SYJEyZL2IaMysKfTV4g');
+    $mandrill = new Mandrill('enter API key');
     $message = array(
         'html' => $mandrillHTML,
         'text' => 'Example text content',
         'subject' => 'example subject',
-        'from_email' => 'gary@gcemarketing.co.uk',
-        'from_name' => 'Gary',
+        'from_email' => 'email',
+        'from_name' => 'from name',
         'to' => $to,
-        'headers' => array('Reply-To' => 'gary@gcemarketing.co.uk'),
+        'headers' => array('Reply-To' => 'reply address'),
         'important' => false,
         'merge_vars' => $mergevars
         );
