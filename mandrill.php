@@ -30,6 +30,7 @@ print_r($dataArray);
 echo "</pre>";
 
 $to = array();
+$mergevars = array();
 
 foreach ($dataArray as $i) {
 	$to[] = array(
@@ -37,6 +38,19 @@ foreach ($dataArray as $i) {
 		'name' => $i["name"],
 		'type' => 'to'
 		);
+	$mergevars[] = array(
+                'rcpt' => $i["email"],
+                'vars' => array(
+                    array(
+                        'name' => 'NAME',
+                        'content' => $i["name"]
+                    ),
+                    array(
+                        'name' => 'SUBMITTED',
+                        'content' => $i["submitted"]
+                    )
+                )
+            );
 }
 
 echo "<pre>";
@@ -45,35 +59,38 @@ print_r($to);
 
 echo "</pre>";
 
-// Need to loop through each row in the $dataArray and use it in the mandrill 'to' array
 
-// try {
-//     $mandrill = new Mandrill('insertAPIkey');
-//     $message = array(
-//         'html' => '<p>Example HTML content</p>',
-//         'text' => 'Example text content',
-//         'subject' => 'example subject',
-//         'from_email' => 'test@test.com',
-//         'from_name' => 'Example Name',
-//         'to' => array(
-//             array(
-//                 'email' => 'test@test.com',
-//                 'name' => 'Gary',
-//                 'type' => 'to'
-//             )
-//         ),
-//         'headers' => array('Reply-To' => 'test@test.com'),
-//         'important' => false
-//         );
-//     $result = $mandrill->messages->send($message);
+echo "<pre>";
 
-//     print_r($result);
+print_r($mergevars);
 
-//     } catch(Mandrill_Error $e) {
-//     // Mandrill errors are thrown as exceptions
-//     echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
-//     // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
-//     throw $e;
-// }
+echo "</pre>";
+
+$mandrillHTML = '<p>Dear *|HTML:NAME|*</p>
+				 <p>Your number of submitted is *|HTML:SUBMITTED|*</p>';
+
+try {
+    $mandrill = new Mandrill('pD7SYJEyZL2IaMysKfTV4g');
+    $message = array(
+        'html' => $mandrillHTML,
+        'text' => 'Example text content',
+        'subject' => 'example subject',
+        'from_email' => 'gary@gcemarketing.co.uk',
+        'from_name' => 'Gary',
+        'to' => $to,
+        'headers' => array('Reply-To' => 'gary@gcemarketing.co.uk'),
+        'important' => false,
+        'merge_vars' => $mergevars
+        );
+    $result = $mandrill->messages->send($message);
+
+    print_r($result);
+
+    } catch(Mandrill_Error $e) {
+    // Mandrill errors are thrown as exceptions
+    echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
+    // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+    throw $e;
+}
 
 ?>
