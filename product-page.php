@@ -1,18 +1,14 @@
 <?php
 // Variables
-$pagename = "Landing Page";
+$pagename = "Product Page";
 
-if (isset($_COOKIE["TestCookie"])) {
-  $cookieval = json_decode($_COOKIE["TestCookie"],true);
-} else {
-  $cookieval = "";
-}
+$expiry = time() + (365 * 24 * 60 * 60);
 
-if (isset($_POST["name"])) {
-          $name = $_POST["name"];
-        } else {
-          $name = "Not set";
-        }
+$cookieArray = json_decode($_COOKIE["TestCookie"],true);
+$cookieArray["lastpage"] = trim($_SERVER["REQUEST_URI"], "/");
+$value = $cookieArray; 
+
+setcookie("TestCookie", json_encode($value), $expiry);
 
 ?>
 
@@ -50,28 +46,12 @@ if (isset($_POST["name"])) {
     <div class="container">
       <div class="col-md-4">
         <h1><?php echo $pagename; ?></h1>
-        <form method="post">
-          <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control preloademail" id="email" placeholder="Email" onfocusout="sendEmail()" value="<?php echo $cookieval["email"]; ?>" >
-          </div>
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Name">
-          </div>
-          <input type="submit" class="btn btn-default" id="submit" name="submit" onclick="sendEmail()">
-        </form>
 
-        <?php 
+            <?php 
 
-      if (isset($_POST["submit"])) {
-  
-        echo "<p class=\"bg-success\">Thanks.</p>";
-    
-      }
+            echo trim($_SERVER["REQUEST_URI"], "/");
 
-    ?>
-
+           ?>
       </div>
     </div>
 

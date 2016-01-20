@@ -23,6 +23,5 @@ echo "<br />";
 foreach ($cookieval as $key => $value) {
 	echo "Key = " . $key . ", Value = " . $value . ". <br />";
 }
-echo "<br />";
 
 ?>
